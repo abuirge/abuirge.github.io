@@ -1,0 +1,21 @@
+.topnav{
+    color: white;
+    background-color: navy;
+    font-size: 2rem;
+    
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
+
+a:visited{
+    color: white;
+    text-decoration: none;
+}
+
+#inlinelink{
+    color: black;
+    text-decoration: underline;
+}
