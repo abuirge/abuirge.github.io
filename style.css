@@ -2,7 +2,12 @@
     color: white;
     background-color: navy;
     font-size: 2rem;
+    font-family: Arial, Helvetica, sans-serif;
     
+}
+
+p{
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 a{
