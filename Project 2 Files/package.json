@@ -8,12 +8,12 @@
     },
     "contributors": [
         {
-            "name": "",
-            "email": ""
+            "name": "Blake Robinson",
+            "email": "robi1652@stthomas.edu"
         },
         {
-            "name": "",
-            "email": ""
+            "name": "Andrew Buirge",
+            "email": "buir1949@stthomas.edu"
         }
     ],
     "main": "server.js",

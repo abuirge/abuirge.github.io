@@ -1,3 +1,58 @@
-* {
+*
+{
     margin: 0 auto;
+    font-family: sans-serif;
+}
+
+#navbar
+{
+    clear: right;
+    padding-top: 1rem;
+    padding-left: 1rem;
+}
+
+.navlink
+{
+    float: left;
+    width: fit-content;
+    margin: 1rem;
+}
+
+h1
+{
+    clear: left;
+    width: fit-content;
+}
+
+#imageContainer
+{
+    float: left;
+    margin: 1rem;
+}
+
+#graphContainer
+{
+    height: 500px;
+    float: left;
+    width: 40rem;
+    margin: 1rem;
+    clear : right;
+}
+
+#tableContainer
+{
+    clear: left;
+    margin: 2rem auto;
+    max-height: 50vh;
+    max-width: 90vw;
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
+table, th, td
+{
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    padding: .1rem .1rem;
 }

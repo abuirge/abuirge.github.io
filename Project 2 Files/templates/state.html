@@ -4,7 +4,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <title>US Energy Consumption</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script type="application/javascript">
         // `state` and arrays of consumption per year => set these variables equal to appropriate value
         //   * these variables will be defined and accessible from any script loaded after this one
@@ -14,9 +15,227 @@
         var nuclear_counts;
         var petroleum_counts;
         var renewable_counts;
+
+        function graph() {
+            var years = [];
+
+            for (let i=1960; i<2018; i++) {
+                years.push(i);
+            }
+
+            var traces = [
+                {x: years, y: coal_counts, stackgroup: 'one', name : 'Coal'},
+                {x: years, y: natural_gas_counts, stackgroup: 'one', name : 'Natural Gas'},
+                {x: years, y: nuclear_counts, stackgroup: 'one', name : 'Nuclear'},
+                {x: years, y: petroleum_counts, stackgroup: 'one', name : 'Petroleum'},
+                {x: years, y: renewable_counts, stackgroup: 'one', name : "Renewable"},
+            ]
+
+            var layout = {
+                title: "Energy Consumption for {STATETABLE} per year (Billion BTU)"
+            }
+
+            Plotly.newPlot('graphContainer', traces, layout);
+
+        }
+
+        function stateNavigate(opt) {
+            let states = ['AK','AL','AR','AZ','CA','CO','CT','DC','DE','FL','GA','HI','IA','ID','IL','IN','KS','KY','LA','MA','MD','ME','MI','MN','MO','MS','MT','NC','ND','NE','NH','NJ','NM','NV','NY','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VA','VT','WA','WI','WV','WY']
+
+            let newPage = new URL(window.location.href);
+            let index = states.indexOf(newPage.pathname.split('/').pop());
+            let value;
+
+            if (opt === 'next') {
+                index = (index === 50) ? 0 : index + 1;
+                value = states[index]
+            } else if (opt === 'prev') {
+                index = (index === 0) ? 50 : index - 1;
+                value = states[index]
+            } else {
+                value = document.getElementById('state').value;
+            }
+
+            newPage.pathname = '/state/' + value;
+            window.location.href = newPage.href
+        }
+
+        function yearNavigate(opt) {
+            let value = document.getElementById('year').value;
+            let newPage = new URL(window.location.href);
+            newPage.pathname = '/year/' + value;
+            window.location.href = newPage.href
+        }
+
+        function energyNavigate(opt) {
+            let value = document.getElementById('energy').value;
+            let newPage = new URL(window.location.href);
+            newPage.pathname = '/energy/' + value;
+            window.location.href = newPage.href
+        }
+
     </script>
 </head>
-<body >
-    <!-- create template here -->
+<body onload = "graph()">
+    <div id = 'navbar'>
+        <button type="button" onclick="stateNavigate('prev')">Prev</button>
+        <label for="state">States:</label>
+        <select id = "state" name = "state">
+            <option value = "AK">AK</option>
+            <option value = "AL">AL</option>
+            <option value = "AR">AR</option>
+            <option value = "AZ">AZ</option>
+            <option value = "CA">CA</option>
+            <option value = "CO">CO</option>
+            <option value = "CT">CT</option>
+            <option value = "DC">DC</option>
+            <option value = "DE">DE</option>
+            <option value = "FL">FL</option>
+            <option value = "GA">GA</option>
+            <option value = "HI">HI</option>
+            <option value = "IA">IA</option>
+            <option value = "ID">ID</option>
+            <option value = "IL">IL</option>
+            <option value = "IN">IN</option>
+            <option value = "KS">KS</option>
+            <option value = "KY">KY</option>
+            <option value = "LA">LA</option>
+            <option value = "MA">MA</option>
+            <option value = "MD">MD</option>
+            <option value = "ME">ME</option>
+            <option value = "MI">MI</option>
+            <option value = "MN">MN</option>
+            <option value = "MO">MO</option>
+            <option value = "MS">MS</option>
+            <option value = "MT">MT</option>
+            <option value = "NC">NC</option>
+            <option value = "ND">ND</option>
+            <option value = "NE">NE</option>
+            <option value = "NH">NH</option>
+            <option value = "NJ">NJ</option>
+            <option value = "NM">NM</option>
+            <option value = "NV">NV</option>
+            <option value = "NY">NY</option>
+            <option value = "OH">OH</option>
+            <option value = "OK">OK</option>
+            <option value = "OR">OR</option>
+            <option value = "PA">PA</option>
+            <option value = "RI">RI</option>
+            <option value = "SC">SC</option>
+            <option value = "SD">SD</option>
+            <option value = "TN">TN</option>
+            <option value = "TX">TX</option>
+            <option value = "UT">UT</option>
+            <option value = "VA">VA</option>
+            <option value = "VT">VT</option>
+            <option value = "WA">WA</option>
+            <option value = "WI">WI</option>
+            <option value = "WV">WV</option>
+            <option value = "WY">WY</option>
+        </select>
+        <button type="button" onclick="stateNavigate('state')">Go</button>
+        <label for="year">Years:</label>
+        <select id = "year" name = "year" onload = "fillYears()">
+            <option value = "1960">1960</option>
+            <option value = "1961">1961</option>
+            <option value = "1962">1962</option>
+            <option value = "1963">1963</option>
+            <option value = "1964">1964</option>
+            <option value = "1965">1965</option>
+            <option value = "1966">1966</option>
+            <option value = "1967">1967</option>
+            <option value = "1968">1968</option>
+            <option value = "1969">1969</option>
+            <option value = "1970">1970</option>
+            <option value = "1971">1971</option>
+            <option value = "1972">1972</option>
+            <option value = "1973">1973</option>
+            <option value = "1974">1974</option>
+            <option value = "1975">1975</option>
+            <option value = "1976">1976</option>
+            <option value = "1977">1977</option>
+            <option value = "1978">1978</option>
+            <option value = "1979">1979</option>
+            <option value = "1980">1980</option>
+            <option value = "1981">1981</option>
+            <option value = "1982">1982</option>
+            <option value = "1983">1983</option>
+            <option value = "1984">1984</option>
+            <option value = "1985">1985</option>
+            <option value = "1986">1986</option>
+            <option value = "1987">1987</option>
+            <option value = "1988">1988</option>
+            <option value = "1989">1989</option>
+            <option value = "1990">1990</option>
+            <option value = "1991">1991</option>
+            <option value = "1992">1992</option>
+            <option value = "1993">1993</option>
+            <option value = "1994">1994</option>
+            <option value = "1995">1995</option>
+            <option value = "1996">1996</option>
+            <option value = "1997">1997</option>
+            <option value = "1998">1998</option>
+            <option value = "1999">1999</option>
+            <option value = "2000">2000</option>
+            <option value = "2001">2001</option>
+            <option value = "2002">2002</option>
+            <option value = "2003">2003</option>
+            <option value = "2004">2004</option>
+            <option value = "2005">2005</option>
+            <option value = "2006">2006</option>
+            <option value = "2007">2007</option>
+            <option value = "2008">2008</option>
+            <option value = "2009">2009</option>
+            <option value = "2010">2010</option>
+            <option value = "2011">2011</option>
+            <option value = "2012">2012</option>
+            <option value = "2013">2013</option>
+            <option value = "2014">2014</option>
+            <option value = "2015">2015</option>
+            <option value = "2016">2016</option>
+            <option value = "2017">2017</option>
+            <option value = "2018">2018</option>
+        </select>
+        <button type = "button" onclick = "yearNavigate('year')">Go</button>
+        <label for = "energy">Energy:</label>
+        <select id = "energy"  name = "energy">
+            <option value = "coal">Coal</option>
+            <option value = "natural_gas">Natural Gas</option>
+            <option value = "nuclear">Nuclear</option>
+            <option value = "petroleum">Petroleum</option>
+            <option value = "renewable">Renewable</option>
+        </select>
+        <button type = "button" onclick = "energyNavigate('energy')">Go</button>
+        <button type = "button" onclick = "stateNavigate('next')">Next</button>
+    </div>
+
+    <h1 id = "stateTitle">{STATETITLE}</h1>
+    <div id = imageContainer>
+        <img height='500' src='/images/states/{IMAGE}' alt = "{ALT}"/>
+
+    </div>
+    <div id = graphContainer>
+
+    </div>
+
+    <div id = 'tableContainer'>
+        <table>
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>Coal</th>
+                    <th>Natural Gas</th>
+                    <th>Nuclear</th>
+                    <th>Petroleum</th>
+                    <th>Renewable</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {TABLE_RESULTS}
+            </tbody>
+        </table>
+    </div>
+
 </body>
 </html>
