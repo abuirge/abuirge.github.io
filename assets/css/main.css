@@ -293,7 +293,7 @@ p {
   letter-spacing: 0.05em;
   line-height: 1;
   margin: 0 0 1.5rem 0;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 h1,
@@ -307,8 +307,8 @@ h6 {
   font-weight: 600;
   letter-spacing: 0.175em;
   line-height: 1.75;
-  margin: 0 0 1.5rem 0;
-  text-transform: uppercase;
+  margin: 0 0 0.5rem 0;
+  text-transform: none;
 }
 
 h1 a,
@@ -342,7 +342,7 @@ h2 {
 }
 
 h3 {
-  font-size: 0.875rem;
+  font-size: 0.975rem;
 }
 
 h4 {
@@ -2631,7 +2631,13 @@ ol li {
 }
 
 ul {
-  list-style: disc;
+  list-style-type: disc;
+  margin: 0 0 2rem 0;
+  padding-left: 1rem;
+}
+
+ul.nested {
+  list-style-type: circle;
   margin: 0 0 2rem 0;
   padding-left: 1rem;
 }
